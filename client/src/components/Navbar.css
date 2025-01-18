@@ -1,0 +1,37 @@
+.navbar {
+  background-color: hsla(7, 34%, 48%, 1);
+  padding: 10px 20px;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+  display: flex;
+}
+
+.navbar a,
+.navbar button {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 5px 15px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.navbar a:hover,
+.navbar button:hover {
+  background-color: #b37a5f;
+  border-radius: 5px;
+}
+
+.navbar a {
+  margin: 0 15px;
+}
+
+.navbar button {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  margin-left: 20px;
+}

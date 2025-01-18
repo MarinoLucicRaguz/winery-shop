@@ -1,8 +1,10 @@
-const WineryRepository = require("../repositories/wineryRepository"); // Only importing the repository
+const WineryRepository = require("../repositories/wineryRepository");
+const WineRepository = require("../repositories/wineRepository");
 
 class WineryController {
   static async createWinery(req, res) {
-    const { name, foundingYear, country, description, logoUrl } = req.body;
+    const { name, foundingYear, country, city, description, logoUrl } =
+      req.body;
 
     try {
       const existingWinery = await WineryRepository.getWineryByName(name);
@@ -16,6 +18,7 @@ class WineryController {
         name,
         foundingYear,
         country,
+        city,
         description,
         logoUrl,
       });
@@ -54,7 +57,8 @@ class WineryController {
 
   static async updateWinery(req, res) {
     const { id } = req.params;
-    const { name, foundingYear, country, description, logoUrl } = req.body;
+    const { name, foundingYear, country, city, description, logoUrl } =
+      req.body;
 
     try {
       const existingWinery = await WineryRepository.getWineryByName(name);
@@ -68,6 +72,7 @@ class WineryController {
         name,
         foundingYear,
         country,
+        city,
         description,
         logoUrl,
       });
@@ -87,6 +92,14 @@ class WineryController {
     const { id } = req.params;
 
     try {
+      const wines = await WineRepository.getWinesByWineryId(id);
+      if (wines && wines.length > 0) {
+        return res.status(400).json({
+          message:
+            "Cannot delete this winery because there are wines associated with it.",
+        });
+      }
+
       const deletedWinery = await WineryRepository.deleteWinery(id);
       if (!deletedWinery) {
         return res.status(404).json({ message: "Winery not found" });

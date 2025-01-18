@@ -1,0 +1,102 @@
+/* Main container styling */
+.winery-form-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form title */
+.winery-form-container h2 {
+  text-align: center;
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Form styling */
+.winery-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Form group */
+.winery-form div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form labels */
+.winery-form label {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+}
+
+/* Input fields and textarea */
+.winery-form input,
+.winery-form textarea {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+}
+
+.winery-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.winery-form input:focus,
+.winery-form textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Submit button */
+.winery-form button {
+  background-color: #28a745;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.winery-form button:hover {
+  background-color: #218838;
+}
+
+/* Error message */
+.error {
+  color: #f44336;
+  background-color: #fddede;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  margin-top: 15px;
+  text-align: center;
+  border: 1px solid #f44336;
+}
+
+/* Success message */
+.success {
+  color: #28a745;
+  background-color: #dff5e1;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  margin-top: 15px;
+  text-align: center;
+  border: 1px solid #28a745;
+}

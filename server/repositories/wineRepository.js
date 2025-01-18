@@ -6,6 +6,10 @@ class WineRepository {
     return await wine.save();
   }
 
+  static async getWinesByWineryId(wineryId) {
+    return await Wine.find({ winery: wineryId });
+  }
+
   static async getAllWines() {
     return await Wine.find().populate("winery");
   }

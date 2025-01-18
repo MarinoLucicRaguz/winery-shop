@@ -4,6 +4,7 @@ const { protect } = require("../middleware/authMiddleware");
 const router = express.Router();
 
 router.post("/", protect, ReviewController.addReview);
-router.get("/:wineId", ReviewController.getReviewsForWine);
+router.get("/", protect, ReviewController.getAllReviews);
+router.get("/:wineId", protect, ReviewController.getReviewsForWine);
 
 module.exports = router;

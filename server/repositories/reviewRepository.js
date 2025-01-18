@@ -6,6 +6,10 @@ class ReviewRepository {
     return await review.save();
   }
 
+  static async getAllReviews() {
+    return await Review.find();
+  }
+
   static async getReviewsForWine(wineId) {
     return await Review.find({ wine: wineId }).populate("user");
   }

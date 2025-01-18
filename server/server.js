@@ -19,7 +19,6 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/wineries", wineryRoutes);
-app.use("/api/wine", wineryRoutes);
 app.use("/api/wine", wineRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/orders", orderRoutes);

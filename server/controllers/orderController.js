@@ -1,4 +1,5 @@
 const OrderRepository = require("../repositories/orderRepository");
+const WineRepository = require("../repositories/wineRepository");
 
 class OrderController {
   static async createOrder(req, res) {

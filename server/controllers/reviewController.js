@@ -26,6 +26,21 @@ class ReviewController {
     }
   }
 
+  static async getAllReviews(req, res) {
+    try {
+      const reviews = await ReviewRepository.getAllReviews();
+
+      if (!reviews || reviews.length === 0) {
+        return res.status(404).json({ message: "No reviews found." });
+      }
+
+      res.status(200).json(reviews);
+    } catch (err) {
+      console.error("Error fetching reviews:", err);
+      res.status(500).json({ message: "Failed to fetch reviews." });
+    }
+  }
+
   static async getReviewsForWine(req, res) {
     const { wineId } = req.params;
 

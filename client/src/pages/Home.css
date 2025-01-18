@@ -1,0 +1,117 @@
+.wineries-home {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.winery-group-home {
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 20px;
+}
+
+.winery-name-home {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.winery-details-home {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.wine-list-home {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.wine-item-home {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wine-item-home:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.wine-item-home h4 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.wine-item-home p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.wine-reviews-home {
+  margin-top: 15px;
+  text-align: left;
+}
+
+.wine-reviews-home p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.wine-reviews-home strong {
+  color: #333;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.filters-home {
+  display: flex;
+  gap: 2%;
+  padding: 6px;
+  background-color: #c3d3c3;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filters-home label {
+  display: inline;
+  margin-top: 5px;
+  font-size: 16px;
+  color: #000000;
+  font-weight: bolder;
+}
+
+.filters-home select,
+.filters-home input {
+  margin-top: 5px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filters-home select:focus,
+.filters-home input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.filters-home select {
+  cursor: pointer;
+}
+
+.filters-home select option {
+  padding: 5px;
+}

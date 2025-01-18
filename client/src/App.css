@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.page-content {
+  padding-top: 40px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

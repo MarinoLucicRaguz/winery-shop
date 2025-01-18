@@ -1,0 +1,114 @@
+.wine-details {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.wine-details-title {
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.wine-info {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.wine-info img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.wine-info p {
+  margin: 5px 0;
+  font-size: 0.9em;
+  color: #444;
+}
+
+.wine-info strong {
+  color: #222;
+}
+
+.add-to-cart-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.add-to-cart-button:hover {
+  background-color: #45a049;
+}
+
+.wine-reviews {
+  background: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.wine-reviews h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.review-item {
+  margin-bottom: 10px;
+  font-size: 0.9em;
+  color: #444;
+}
+
+.review-form {
+  background: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-form h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  font-size: 0.9em;
+}
+
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.submit-review-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.submit-review-button:hover {
+  background-color: #0056b3;
+}

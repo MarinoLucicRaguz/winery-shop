@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post("/", protect, OrderController.createOrder);
 router.get("/", protect, OrderController.getCustomerOrders);
-router.get("/winery/:wineryId", OrderController.getWineryOrders);
+router.get("/winery/:wineryId", protect, OrderController.getWineryOrders);
 
 module.exports = router;
