@@ -31,7 +31,7 @@ const WineryForm = () => {
       setError("");
     } catch (err) {
       setSuccess("");
-      setError(err.response?.data?.message || "Failed to add winery.");
+      setError(err.response?.data?.message);
     }
   };
 

@@ -12,22 +12,21 @@ const WineDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [review, setReview] = useState({ rating: 5, comment: "" });
-  const [userHasReviewed, setUserHasReviewed] = useState(false); // New state
+  const [userHasReviewed, setUserHasReviewed] = useState(false);
   const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchWineDetails = async () => {
       try {
-        const userId = getUserIdFromToken(); // Get logged-in user's ID
+        const userId = getUserIdFromToken();
         const wineResponse = await axiosInstance.get(`/wine/${id}`);
         setWine(wineResponse.data);
 
         const reviewsResponse = await axiosInstance.get(`/reviews/${id}`);
         setReviews(reviewsResponse.data);
 
-        // Check if the user has already reviewed this wine
         const hasReviewed = reviewsResponse.data.some(
-          (review) => review.user.id === userId // Match review user ID with logged-in user ID
+          (review) => review.user._id === userId
         );
         setUserHasReviewed(hasReviewed);
 
@@ -58,14 +57,14 @@ const WineDetails = () => {
         comment: review.comment,
       };
 
-      await axiosInstance.post("/api/reviews", newReview);
+      await axiosInstance.post("/reviews", newReview);
 
       const wineResponse = await axiosInstance.get(`/wine/${id}`);
       const reviewsResponse = await axiosInstance.get(`/reviews/${id}`);
       setWine(wineResponse.data);
       setReviews(reviewsResponse.data);
 
-      setUserHasReviewed(true); // Mark as reviewed
+      setUserHasReviewed(true);
       setReview({ rating: 5, comment: "" });
     } catch (err) {
       setError("Failed to submit the review.");

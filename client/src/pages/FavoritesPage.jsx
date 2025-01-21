@@ -3,27 +3,22 @@ import axiosInstance from "../axios";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import "./FavoritesPage.css";
-
+import Modal from "../components/Modal";
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const [modalMessage, setModalMessage] = useState("");
   const { currentUser } = useAuth();
 
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        if (!currentUser || !currentUser.id) {
-          setError("User not logged in.");
-          return;
-        }
         const response = await axiosInstance.get(
           `/users/${currentUser.id}/favorites/wines`
         );
-        setFavorites(response.data.favorites || response.data);
+        setFavorites(response.data.favorites);
       } catch (err) {
-        console.error(err);
         setError("Failed to load favorites.");
       } finally {
         setLoading(false);
@@ -35,20 +30,15 @@ const FavoritesPage = () => {
 
   const handleRemoveFavorite = async (wineId) => {
     try {
-      if (!currentUser || !currentUser.id) {
-        alert("User not logged in.");
-        return;
-      }
       await axiosInstance.delete(
         `/users/${currentUser.id}/favorites/wines/${wineId}`
       );
       setFavorites((prevFavorites) =>
         prevFavorites.filter((wine) => wine._id !== wineId)
       );
-      alert("Wine removed from favorites.");
+      setModalMessage("Wine removed from favorites.");
     } catch (err) {
-      console.error(err);
-      alert("Failed to remove favorite.");
+      setModalMessage("Failed to remove favorite.");
     }
   };
 

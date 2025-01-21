@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import axiosInstance from "../../axios"; // Axios instance
-import { useParams } from "react-router-dom"; // useParams to get winery ID from URL
+import axiosInstance from "../../axios";
+import { useParams } from "react-router-dom";
 import "./WineryDetails.css";
 
 const WineryDetails = () => {
-  const { id } = useParams(); // Get winery ID from the URL
+  const { id } = useParams();
   const [winery, setWinery] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Fetch winery details based on the winery ID
   useEffect(() => {
     const fetchWineryDetails = async () => {
       try {
@@ -23,7 +22,7 @@ const WineryDetails = () => {
     };
 
     fetchWineryDetails();
-  }, [id]); // Dependency on winery ID
+  }, [id]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;

@@ -4,6 +4,7 @@ import "./WinePage.css";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
+import Modal from "../components/Modal";
 
 const WinePage = () => {
   const [wines, setWines] = useState([]);
@@ -13,7 +14,8 @@ const WinePage = () => {
   const [error, setError] = useState("");
   const [filters, setFilters] = useState({ type: "", price: "", wineryId: "" });
   const [sort, setSort] = useState("name");
-  const [favoriteIds, setFavoriteIds] = useState([]); // State for favorite wine IDs
+  const [favoriteIds, setFavoriteIds] = useState([]);
+  const [modalMessage, setModalMessage] = useState("");
 
   const { cartItems, addToCart, removeFromCart } = useCart();
   const { currentUser } = useAuth();
@@ -101,7 +103,7 @@ const WinePage = () => {
       if (wineInCart) {
         removeFromCart(wineId);
       }
-      alert("Wine deleted successfully");
+      setModalMessage("Wine deleted successfully");
     } catch (err) {
       setError("Failed to delete wine.");
     }
@@ -109,19 +111,14 @@ const WinePage = () => {
 
   const handleFavorite = async (wineId) => {
     try {
-      if (!currentUser || !currentUser.id) {
-        alert("User not logged in.");
-        return;
-      }
       await axiosInstance.post(
         `/users/${currentUser.id}/favorites/wines/${wineId}`
       );
-      alert("Wine added to favorites.");
+      setModalMessage("Wine added to favorites.");
 
       setFavoriteIds((prevIds) => [...prevIds, wineId]);
     } catch (err) {
-      console.error(err);
-      alert("Failed to add favorite.");
+      setModalMessage("Failed to add favorite.");
     }
   };
 
@@ -129,60 +126,74 @@ const WinePage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="wine-list">
-      <div className="wine-grid">
-        {sortedWines.map((wine) => {
-          const isFavorite = favoriteIds.includes(wine._id);
-          return (
-            <div className="wine-item" key={wine._id}>
-              <div className="wine-info">
-                <h3>{wine.name}</h3>
-                <p>{wine.type}</p>
-                <p>${wine.price}</p>
-                <p>
-                  Winery: {wine.winery ? wine.winery.name : "Unknown Winery"}
-                </p>
-                <button onClick={() => addToCart(wine)}>Add to Cart</button>
-              </div>
-              <div className="wine-reviews">
-                <p>Reviews: {wine.reviews.length}</p>
-                {wine.reviews.length > 0 && (
+    <>
+      {modalMessage && (
+        <Modal message={modalMessage} onClose={() => setModalMessage("")} />
+      )}
+      <div className="wine-list">
+        <div className="wine-grid">
+          {sortedWines.map((wine) => {
+            const isFavorite = favoriteIds.includes(wine._id);
+            return (
+              <div className="wine-item" key={wine._id}>
+                <div className="wine-info">
+                  <h3>{wine.name}</h3>
+                  <p>{wine.type}</p>
+                  <p>${wine.price}</p>
                   <p>
-                    Average Rating:{" "}
-                    {(
-                      wine.reviews.reduce(
-                        (sum, review) => sum + review.rating,
-                        0
-                      ) / wine.reviews.length
-                    ).toFixed(1)}
-                    /5
+                    Winery: {wine.winery ? wine.winery.name : "Unknown Winery"}
                   </p>
-                )}
-              </div>
-              <div className="wine-buttons">
-                <Link to={`/wines/${wine._id}`} className="wine-details-link">
-                  View Details
-                </Link>
-                {isAdmin && (
                   <button
-                    onClick={() => handleDelete(wine._id)}
-                    className="delete-button"
+                    onClick={() => {
+                      addToCart(wine);
+                      setModalMessage("Wine added to cart.");
+                    }}
                   >
-                    Delete Wine
+                    Add to Cart
                   </button>
-                )}
-                <button
-                  onClick={() => handleFavorite(wine._id)}
-                  className={`favorite-button ${isFavorite ? "favorited" : ""}`}
-                >
-                  {isFavorite ? "Favorited" : "Favorite"}
-                </button>
+                </div>
+                <div className="wine-reviews">
+                  <p>Reviews: {wine.reviews.length}</p>
+                  {wine.reviews.length > 0 && (
+                    <p>
+                      Average Rating:{" "}
+                      {(
+                        wine.reviews.reduce(
+                          (sum, review) => sum + review.rating,
+                          0
+                        ) / wine.reviews.length
+                      ).toFixed(1)}
+                      /5
+                    </p>
+                  )}
+                </div>
+                <div className="wine-buttons">
+                  <Link to={`/wines/${wine._id}`} className="wine-details-link">
+                    View Details
+                  </Link>
+                  {isAdmin && (
+                    <button
+                      onClick={() => handleDelete(wine._id)}
+                      className="delete-button"
+                    >
+                      Delete Wine
+                    </button>
+                  )}
+                  <button
+                    onClick={() => handleFavorite(wine._id)}
+                    className={`favorite-button ${
+                      isFavorite ? "favorited" : ""
+                    }`}
+                  >
+                    {isFavorite ? "Favorited" : "Favorite"}
+                  </button>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

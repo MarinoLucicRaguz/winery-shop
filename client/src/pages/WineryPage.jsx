@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import axiosInstance from "../axios";
 import "./WineryPage.css";
 import { useAuth } from "../context/AuthContext";
+import Modal from "../components/Modal";
 
 const WineryPage = () => {
   const [wineries, setWineries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [modalMessage, setModalMessage] = useState("");
 
   const { currentUser } = useAuth();
   const isAdmin = currentUser?.role === "admin";
@@ -30,7 +32,7 @@ const WineryPage = () => {
   const handleDelete = async (wineryId) => {
     try {
       const response = await axiosInstance.delete(`/wineries/${wineryId}`);
-      alert(response.data.message);
+      setModalMessage(response.data.message);
       setWineries((prevWineries) =>
         prevWineries.filter((winery) => winery._id !== wineryId)
       );
@@ -42,6 +44,9 @@ const WineryPage = () => {
   return (
     <div className="winery-page-container">
       <div className="winery-page-header">
+        {modalMessage && (
+          <Modal message={modalMessage} onClose={() => setModalMessage("")} />
+        )}
         <h1>Our Wineries</h1>
         {isAdmin && (
           <Link to="/wineries/add" className="add-winery-button-winery-page">
