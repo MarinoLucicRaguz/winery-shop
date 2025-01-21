@@ -12,6 +12,14 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: { type: String, enum: ["admin", "customer"], default: "customer" },
   createdAt: { type: Date, default: Date.now },
+  favorites: {
+    wines: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Wine",
+      },
+    ],
+  },
 });
 
 UserSchema.pre("save", async function (next) {

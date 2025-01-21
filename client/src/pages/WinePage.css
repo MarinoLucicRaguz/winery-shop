@@ -157,3 +157,15 @@
 .delete-button:hover {
   background-color: #d32f2f;
 }
+
+.favorite-button:hover {
+  background-color: #0056b3;
+}
+
+.favorite-button.favorited {
+  background-color: #28a745;
+}
+
+.favorite-button.favorited:hover {
+  background-color: #1e7e34;
+}

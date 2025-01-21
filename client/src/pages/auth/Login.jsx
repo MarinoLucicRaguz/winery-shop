@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import axiosInstance from "../../axios";
 import { useNavigate } from "react-router-dom";
 import AuthBox from "../../components/AuthBox";
+import { useAuth } from "../../context/AuthContext";
 
-const Login = ({ setIsAuthenticated, setUser }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,11 +19,15 @@ const Login = ({ setIsAuthenticated, setUser }) => {
         password,
       });
       localStorage.setItem("token", response.data.token);
-      setIsAuthenticated(true);
-      setUser({ username: response.data.username });
-      navigate("/dashboard");
+      login({
+        id: response.data.id,
+        username: response.data.username,
+        role: response.data.role,
+      });
+
+      navigate("/");
     } catch (err) {
-      setError(err.response.data.message);
+      setError(err.response?.data?.message || "Login failed.");
     }
   };
 

@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../axios";
 import "./WineryPage.css";
+import { useAuth } from "../context/AuthContext";
 
 const WineryPage = () => {
   const [wineries, setWineries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const { currentUser } = useAuth();
+  const isAdmin = currentUser?.role === "admin";
 
   useEffect(() => {
     const fetchWineries = async () => {
@@ -39,9 +43,11 @@ const WineryPage = () => {
     <div className="winery-page-container">
       <div className="winery-page-header">
         <h1>Our Wineries</h1>
-        <Link to="/wineries/add" className="add-winery-button-winery-page">
-          Add New Winery
-        </Link>
+        {isAdmin && (
+          <Link to="/wineries/add" className="add-winery-button-winery-page">
+            Add New Winery
+          </Link>
+        )}
       </div>
 
       {loading && <p>Loading wineries...</p>}
@@ -62,12 +68,14 @@ const WineryPage = () => {
               >
                 View Details
               </Link>
-              <button
-                onClick={() => handleDelete(winery._id)}
-                className="winery-page-delete-button"
-              >
-                Delete
-              </button>
+              {isAdmin && (
+                <button
+                  onClick={() => handleDelete(winery._id)}
+                  className="winery-page-delete-button"
+                >
+                  Delete
+                </button>
+              )}
             </div>
           </div>
         ))}

@@ -36,10 +36,9 @@ const Cart = () => {
     };
 
     try {
-      console.log(orderData);
       const response = await axiosInstance.post("/orders", orderData);
       setSuccess("Order created successfully!");
-      clearCart(); // Clear the cart on success
+      clearCart();
     } catch (err) {
       setError(
         err.response?.data?.message ||
