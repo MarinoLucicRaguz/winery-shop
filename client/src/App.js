@@ -50,7 +50,7 @@ function App() {
                 </RedirectMiddleware>
               }
             />
-            <Route element={<PrivateRoute currentUser={currentUser} />}>
+            <Route element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/wines" element={<WinePage />} />
@@ -59,7 +59,7 @@ function App() {
               <Route path="/wineries/:id" element={<WineryDetails />} />
               <Route path="/orders" element={<Orders />} />
               <Route path="/favorites" element={<FavoritesPage />} />
-              <Route element={<AdminRoute currentUser={currentUser} />}>
+              <Route element={<AdminRoute />}>
                 <Route path="/wines/add" element={<WineForm />} />
                 <Route path="/wineries/add" element={<WineryForm />} />
               </Route>
