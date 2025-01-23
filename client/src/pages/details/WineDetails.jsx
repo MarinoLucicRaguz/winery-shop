@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import axiosInstance from "../../axios";
 import { useParams } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
+import Modal from "../../components/Modal";
 import "./WineDetails.css";
-import { getUserIdFromToken } from "../../utils/auth";
+import { getUserFromToken } from "../../utils/auth";
 
 const WineDetails = () => {
   const { id } = useParams();
@@ -13,12 +14,13 @@ const WineDetails = () => {
   const [error, setError] = useState("");
   const [review, setReview] = useState({ rating: 5, comment: "" });
   const [userHasReviewed, setUserHasReviewed] = useState(false);
+  const [modalMessage, setModalMessage] = useState(""); // State for the modal message
   const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchWineDetails = async () => {
       try {
-        const userId = getUserIdFromToken();
+        const user = getUserFromToken();
         const wineResponse = await axiosInstance.get(`/wine/${id}`);
         setWine(wineResponse.data);
 
@@ -26,7 +28,7 @@ const WineDetails = () => {
         setReviews(reviewsResponse.data);
 
         const hasReviewed = reviewsResponse.data.some(
-          (review) => review.user._id === userId
+          (review) => review.user._id === user.id
         );
         setUserHasReviewed(hasReviewed);
 
@@ -73,6 +75,7 @@ const WineDetails = () => {
 
   const addToCartHandler = () => {
     addToCart(wine);
+    setModalMessage(`${wine.name} has been added to your cart.`);
   };
 
   if (loading) return <p>Loading...</p>;
@@ -80,20 +83,18 @@ const WineDetails = () => {
 
   return (
     <div className="wine-details">
+      {modalMessage && (
+        <Modal message={modalMessage} onClose={() => setModalMessage("")} />
+      )}
       {wine && (
         <>
           <h1 className="wine-details-title">{wine.name}</h1>
           <div className="wine-info">
-            <img
-              src={wine.imageUrl || "/default-wine.jpg"}
-              alt={wine.name}
-              className="wine-image"
-            />
             <p>
               <strong>Type:</strong> {wine.type}
             </p>
             <p>
-              <strong>Price:</strong> ${wine.price}
+              <strong>Price:</strong> {wine.price}€
             </p>
             <p>
               <strong>Vintage:</strong> {wine.vintage}

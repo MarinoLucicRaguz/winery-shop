@@ -1,23 +1,30 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../axios";
-import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import "./FavoritesPage.css";
-import Modal from "../components/Modal";
+import { getUserFromToken } from "../utils/auth";
+
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
   const [modalMessage, setModalMessage] = useState("");
-  const { currentUser } = useAuth();
 
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
+        const user = getUserFromToken();
+        if (!user) {
+          setError("User not logged in.");
+          return;
+        }
+        setCurrentUser(user);
+
         const response = await axiosInstance.get(
-          `/users/${currentUser.id}/favorites/wines`
+          `/users/${user.id}/favorites/wines`
         );
-        setFavorites(response.data.favorites);
+        setFavorites(response.data.favorites || []);
       } catch (err) {
         setError("Failed to load favorites.");
       } finally {
@@ -26,7 +33,7 @@ const FavoritesPage = () => {
     };
 
     fetchFavorites();
-  }, [currentUser]);
+  }, []);
 
   const handleRemoveFavorite = async (wineId) => {
     try {
@@ -56,18 +63,27 @@ const FavoritesPage = () => {
             <div className="wine-item-favorites" key={wine._id}>
               <h3>{wine.name}</h3>
               <p>Type: {wine.type}</p>
-              <p>Price: ${wine.price}</p>
-              <p>Winery: {wine.winery ? wine.winery.name : "Unknown Winery"}</p>
-              <Link to={`/wines/${wine._id}`}>View Details</Link>
-              <button
-                onClick={() => handleRemoveFavorite(wine._id)}
-                className="remove-button-favorites"
-              >
-                Remove from Favorites
-              </button>
+              <p>Price: {wine.price}€</p>
+              <div className="button-group-favorites">
+                <Link
+                  to={`/wines/${wine._id}`}
+                  className="details-button-favorites"
+                >
+                  View Details
+                </Link>
+                <button
+                  onClick={() => handleRemoveFavorite(wine._id)}
+                  className="remove-button-favorites"
+                >
+                  Remove from Favorites
+                </button>
+              </div>
             </div>
           ))}
         </div>
+      )}
+      {modalMessage && (
+        <p className="modal-message-favorites">{modalMessage}</p>
       )}
     </div>
   );

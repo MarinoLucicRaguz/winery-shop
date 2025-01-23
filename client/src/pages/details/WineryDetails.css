@@ -1,6 +1,3 @@
-/* WineryDetails.css */
-
-/* Main container for the winery details */
 .winery-details {
   padding: 20px;
   max-width: 1000px;
@@ -26,13 +23,6 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.winery-logo img {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-  max-width: 250px; /* Limit the max width */
 }
 
 .winery-description {

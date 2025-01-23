@@ -60,23 +60,23 @@ const Cart = () => {
             <div key={item._id} className="cart-item">
               <h4 className="item-name">{item.name}</h4>
               <p className="item-details">
-                {item.quantity} x ${item.price.toFixed(2)}
+                {item.quantity} x €{item.price.toFixed(2)}
               </p>
               <div className="quantity-controls">
                 <button
-                  onClick={() => decreaseQuantity(item._id)} // Decrease quantity
+                  onClick={() => decreaseQuantity(item._id)}
                   className="decrease-button"
                 >
                   -
                 </button>
                 <button
-                  onClick={() => handleIncrease(item._id)} // Increase quantity
+                  onClick={() => handleIncrease(item._id)}
                   className="increase-button"
                 >
                   +
                 </button>
                 <button
-                  onClick={() => removeFromCart(item._id)} // Remove item from cart
+                  onClick={() => removeFromCart(item._id)}
                   className="remove-button"
                 >
                   Remove
@@ -85,7 +85,7 @@ const Cart = () => {
             </div>
           ))}
           <div className="cart-summary">
-            <h4>Total: ${totalAmount.toFixed(2)}</h4>
+            <h4>Total: €{totalAmount.toFixed(2)}</h4>
             <div className="cart-actions">
               <button onClick={clearCart} className="clear-button">
                 Clear Cart

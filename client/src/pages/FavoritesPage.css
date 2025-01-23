@@ -1,13 +1,9 @@
-/* FavoritesPage.css with -favorites suffix for specificity */
-
-/* Container for the favorites page */
 .favorites-page-favorites {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Title styling */
 .favorites-title-favorites {
   text-align: center;
   margin-bottom: 20px;
@@ -15,14 +11,12 @@
   color: #333;
 }
 
-/* Grid layout for favorite items */
 .favorites-grid-favorites {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
 }
 
-/* Individual wine item styling */
 .wine-item-favorites {
   background-color: #fff;
   border: 1px solid #ddd;
@@ -30,6 +24,9 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 15px;
   transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .wine-item-favorites:hover {
@@ -47,26 +44,29 @@
   color: #666;
 }
 
-/* Link styled as button for "View Details" */
-.wine-item-favorites a {
-  display: inline-block;
+.button-group-favorites {
   margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.details-button-favorites {
+  display: inline-block;
   padding: 8px 12px;
   background-color: #007bff;
   color: #fff;
   text-decoration: none;
   border-radius: 4px;
   transition: background-color 0.2s ease;
+  text-align: center;
 }
 
-.wine-item-favorites a:hover {
+.details-button-favorites:hover {
   background-color: #0056b3;
 }
 
-/* Remove button styling */
 .remove-button-favorites {
-  display: inline-block;
-  margin-top: 10px;
   padding: 8px 12px;
   background-color: #dc3545;
   color: #fff;
@@ -78,4 +78,11 @@
 
 .remove-button-favorites:hover {
   background-color: #a71d2a;
+}
+
+.modal-message-favorites {
+  margin-top: 20px;
+  color: #007bff;
+  text-align: center;
+  font-size: 1em;
 }

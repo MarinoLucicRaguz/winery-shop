@@ -19,7 +19,6 @@ const Register = () => {
         password,
       });
 
-      // localStorage.setItem("token", response.data.token);
       navigate("/login");
     } catch (err) {
       setError(err.response.data.message);

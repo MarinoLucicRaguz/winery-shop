@@ -1,4 +1,3 @@
-/* Cart Container */
 .cart-container {
   margin: 20px auto;
   padding: 20px;
@@ -8,7 +7,6 @@
   max-width: 800px;
 }
 
-/* Cart Title */
 .cart-title {
   font-size: 24px;
   font-weight: bold;
@@ -16,20 +14,17 @@
   margin-bottom: 20px;
 }
 
-/* Cart Message (Empty Cart) */
 .cart-message {
   text-align: center;
   font-size: 18px;
   color: #555;
 }
 
-/* Cart Content (List of Items) */
 .cart-content {
   display: flex;
   flex-direction: column;
 }
 
-/* Single Cart Item */
 .cart-item {
   display: flex;
   justify-content: space-between;
@@ -41,27 +36,16 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Wine Name */
 .cart-item .item-name {
   font-size: 18px;
   font-weight: 600;
 }
 
-/* Item Details (Price and Quantity) */
 .cart-item .item-details {
   font-size: 16px;
   color: #666;
 }
 
-/* Wine Image */
-.cart-item .wine-image img {
-  width: 80px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 4px;
-}
-
-/* Cart Summary Section */
 .cart-summary {
   background-color: #fff;
   padding: 20px;
@@ -70,21 +54,18 @@
   margin-top: 20px;
 }
 
-/* Total Amount Text */
 .cart-summary h4 {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 15px;
 }
 
-/* Cart Actions (Buttons) */
 .cart-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Buttons */
 .cart-actions button,
 .clear-button,
 .order-button,
@@ -104,7 +85,6 @@
   opacity: 0.8;
 }
 
-/* Specific Button Colors */
 .clear-button {
   background-color: #ff4d4f;
   color: #fff;
@@ -120,7 +100,6 @@
   color: white;
 }
 
-/* Remove/Delete Button */
 .remove-button,
 .delete-button {
   background-color: #dc3545;
@@ -135,7 +114,6 @@
   background-color: #c82333;
 }
 
-/* Decrease Button */
 .decrease-button {
   background-color: #f0ad4e;
   color: white;
@@ -149,7 +127,6 @@
   background-color: #ec971f;
 }
 
-/* Plus Button */
 .increase-button {
   background-color: #007bff;
   color: white;
@@ -163,7 +140,6 @@
   background-color: #0056b3;
 }
 
-/* Error and Success Messages */
 .cart-error,
 .cart-success {
   font-size: 16px;

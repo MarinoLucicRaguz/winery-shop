@@ -141,7 +141,7 @@ const Home = () => {
                   <div key={wine._id} className="wine-item-home">
                     <h4>{wine.name}</h4>
                     <p>Type: {wine.type}</p>
-                    <p>Price: ${wine.price}</p>
+                    <p>Price: {wine.price}€</p>
                     <p>Reviews: {wine.reviews.length}</p>
                     <div className="wine-reviews-home">
                       {wine.reviews.length > 0 ? (

@@ -3,8 +3,8 @@ import axiosInstance from "../axios";
 import "./WinePage.css";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { useAuth } from "../context/AuthContext";
 import Modal from "../components/Modal";
+import { getUserFromToken } from "../utils/auth";
 
 const WinePage = () => {
   const [wines, setWines] = useState([]);
@@ -16,14 +16,15 @@ const WinePage = () => {
   const [sort, setSort] = useState("name");
   const [favoriteIds, setFavoriteIds] = useState([]);
   const [modalMessage, setModalMessage] = useState("");
-
+  const [currentUser, setCurrentUser] = useState();
   const { cartItems, addToCart, removeFromCart } = useCart();
-  const { currentUser } = useAuth();
-  const isAdmin = currentUser?.role === "admin";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const user = getUserFromToken();
+        setCurrentUser(user);
+
         const winesResponse = await axiosInstance.get("/wine");
         const wineriesResponse = await axiosInstance.get("/wineries");
         const reviewsResponse = await axiosInstance.get("/reviews");
@@ -131,6 +132,13 @@ const WinePage = () => {
         <Modal message={modalMessage} onClose={() => setModalMessage("")} />
       )}
       <div className="wine-list">
+        {currentUser?.role === "admin" && (
+          <div className="filters-container">
+            <Link to="/wines/add" className="add-wine-button">
+              Add Wine
+            </Link>
+          </div>
+        )}
         <div className="wine-grid">
           {sortedWines.map((wine) => {
             const isFavorite = favoriteIds.includes(wine._id);
@@ -138,8 +146,8 @@ const WinePage = () => {
               <div className="wine-item" key={wine._id}>
                 <div className="wine-info">
                   <h3>{wine.name}</h3>
-                  <p>{wine.type}</p>
-                  <p>${wine.price}</p>
+                  <p>Type: {wine.type}</p>
+                  <p>Price: {wine.price}€</p>
                   <p>
                     Winery: {wine.winery ? wine.winery.name : "Unknown Winery"}
                   </p>
@@ -171,7 +179,7 @@ const WinePage = () => {
                   <Link to={`/wines/${wine._id}`} className="wine-details-link">
                     View Details
                   </Link>
-                  {isAdmin && (
+                  {currentUser?.role === "admin" && (
                     <button
                       onClick={() => handleDelete(wine._id)}
                       className="delete-button"

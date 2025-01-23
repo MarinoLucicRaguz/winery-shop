@@ -18,12 +18,11 @@ const WineForm = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  // Fetch wineries when the component mounts
   useEffect(() => {
     const fetchWineries = async () => {
       try {
         const response = await axiosInstance.get("/wineries");
-        setWineries(response.data); // Set the wineries in state
+        setWineries(response.data);
       } catch (err) {
         setError("Failed to fetch wineries.");
       }
@@ -32,15 +31,12 @@ const WineForm = () => {
     fetchWineries();
   }, []);
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Clear previous error states
     setError("");
     setDetailedErrors([]);
 
-    // Validation logic
     const validationErrors = [];
 
     if (!name.trim()) {
@@ -70,13 +66,11 @@ const WineForm = () => {
       validationErrors.push("Description must be 1000 characters or fewer.");
     }
 
-    // If there are validation errors, stop submission
     if (validationErrors.length > 0) {
       setDetailedErrors(validationErrors);
       return;
     }
 
-    // Proceed with submission if validation passes
     try {
       const response = await axiosInstance.post("/wine", {
         name,
@@ -91,14 +85,11 @@ const WineForm = () => {
 
       setSuccess("Wine added successfully!");
       setError("");
-      setDetailedErrors([]); // Clear previous errors
-
-      // Optionally, redirect to another page
+      setDetailedErrors([]);
       setTimeout(() => navigate("/wines"), 2000);
     } catch (err) {
       setSuccess("");
 
-      // Parse detailed validation errors from backend if available
       if (err.response?.data?.errors) {
         const serverValidationErrors = Object.values(
           err.response.data.errors
@@ -106,7 +97,7 @@ const WineForm = () => {
         setDetailedErrors(serverValidationErrors);
       } else {
         setError(err.response?.data?.message || "Failed to add wine.");
-        setDetailedErrors([]); // Clear detailed errors
+        setDetailedErrors([]);
       }
     }
   };
@@ -200,10 +191,7 @@ const WineForm = () => {
         </button>
       </form>
 
-      {/* Error Messages */}
       {error && <div className="form-error">{error}</div>}
-
-      {/* Detailed Validation Errors */}
       {detailedErrors.length > 0 && (
         <ul className="form-detailed-errors">
           {detailedErrors.map((err, index) => (
@@ -211,8 +199,6 @@ const WineForm = () => {
           ))}
         </ul>
       )}
-
-      {/* Success Message */}
       {success && <div className="form-success">{success}</div>}
     </div>
   );

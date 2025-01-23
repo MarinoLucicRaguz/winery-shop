@@ -8,7 +8,6 @@ const Orders = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Fetch orders
   useEffect(() => {
     const fetchOrders = async () => {
       setLoading(true);
@@ -25,7 +24,6 @@ const Orders = () => {
     fetchOrders();
   }, []);
 
-  // View details of a specific order
   const viewOrderDetails = (order) => {
     setSelectedOrder(order);
   };
@@ -48,7 +46,7 @@ const Orders = () => {
                   <strong>Order ID:</strong> {order._id}
                 </p>
                 <p>
-                  <strong>Total Amount:</strong> ${order.totalAmount.toFixed(2)}
+                  <strong>Total Amount:</strong> €{order.totalAmount.toFixed(2)}
                 </p>
                 <p>
                   <strong>Status:</strong> {order.status}
@@ -72,7 +70,7 @@ const Orders = () => {
             <strong>Order ID:</strong> {selectedOrder._id}
           </p>
           <p>
-            <strong>Total Amount:</strong> $
+            <strong>Total Amount:</strong> €
             {selectedOrder.totalAmount.toFixed(2)}
           </p>
           <p>
@@ -86,7 +84,7 @@ const Orders = () => {
           <ul>
             {selectedOrder.wines.map((wineItem) => (
               <li key={wineItem.wine}>
-                {wineItem.quantity} x {wineItem.wine.name} @ $
+                {wineItem.quantity} x {wineItem.wine.name} @ €
                 {wineItem.price.toFixed(2)} each
               </li>
             ))}

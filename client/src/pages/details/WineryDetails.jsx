@@ -44,12 +44,6 @@ const WineryDetails = () => {
           <p>
             <strong>Description:</strong> {winery.description}
           </p>
-          <div className="winery-logo">
-            <img
-              src={winery.logoUrl || "/default-logo.jpg"}
-              alt={winery.name}
-            />
-          </div>
         </>
       )}
     </div>

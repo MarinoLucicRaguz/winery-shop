@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axiosInstance from "../../axios";
 import { useNavigate } from "react-router-dom";
-import "./WineryForm.css"; // Import CSS
+import "./WineryForm.css";
 
 const WineryForm = () => {
   const [name, setName] = useState("");
@@ -29,6 +29,7 @@ const WineryForm = () => {
 
       setSuccess("Winery added successfully!");
       setError("");
+      setTimeout(() => navigate("/wineries"), 2000);
     } catch (err) {
       setSuccess("");
       setError(err.response?.data?.message);

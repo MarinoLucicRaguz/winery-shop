@@ -2,26 +2,26 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../axios";
 import "./WineryPage.css";
-import { useAuth } from "../context/AuthContext";
 import Modal from "../components/Modal";
+import { getUserFromToken } from "../utils/auth";
 
 const WineryPage = () => {
   const [wineries, setWineries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [modalMessage, setModalMessage] = useState("");
-
-  const { currentUser } = useAuth();
-  const isAdmin = currentUser?.role === "admin";
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     const fetchWineries = async () => {
       try {
+        const user = getUserFromToken();
+        setCurrentUser(user);
         const response = await axiosInstance.get("/wineries");
         setWineries(response.data);
-        setLoading(false);
       } catch (err) {
         setError("Failed to load wineries.");
+      } finally {
         setLoading(false);
       }
     };
@@ -48,7 +48,7 @@ const WineryPage = () => {
           <Modal message={modalMessage} onClose={() => setModalMessage("")} />
         )}
         <h1>Our Wineries</h1>
-        {isAdmin && (
+        {currentUser && currentUser.role === "admin" && (
           <Link to="/wineries/add" className="add-winery-button-winery-page">
             Add New Winery
           </Link>
@@ -73,7 +73,7 @@ const WineryPage = () => {
               >
                 View Details
               </Link>
-              {isAdmin && (
+              {currentUser && currentUser.role === "admin" && (
                 <button
                   onClick={() => handleDelete(winery._id)}
                   className="winery-page-delete-button"
