@@ -13,24 +13,38 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const winesResponse = await axiosInstance.get("/wine");
-        const wineriesResponse = await axiosInstance.get("/wineries");
-        const reviewsResponse = await axiosInstance.get("/reviews");
-
-        setWines(winesResponse.data);
-        setWineries(wineriesResponse.data);
-        setReviews(reviewsResponse.data);
+        setWines(winesResponse.data || []);
       } catch (err) {
-        console.error("Error fetching data", err);
+        console.error("Error fetching wines", err);
+        setWines([]);
+      }
+
+      try {
+        const wineriesResponse = await axiosInstance.get("/wineries");
+        setWineries(wineriesResponse.data || []);
+      } catch (err) {
+        console.error("Error fetching wineries", err);
+        setWineries([]);
+      }
+
+      try {
+        const reviewsResponse = await axiosInstance.get("/reviews");
+        setReviews(reviewsResponse.data || []);
+      } catch (err) {
+        console.error("Error fetching reviews", err);
+        setReviews([]);
       }
     };
 
     fetchData();
   }, []);
 
-  const winesWithDetails = wines.map((wine) => ({
-    ...wine,
-    reviews: reviews.filter((review) => review.wine === wine._id),
-  }));
+  const winesWithDetails = wines.map((wine) => {
+    return {
+      ...wine,
+      reviews: reviews.filter((review) => review.wine === wine._id),
+    };
+  });
 
   const filteredWines = winesWithDetails.filter((wine) => {
     let isValid = true;
@@ -39,11 +53,18 @@ const Home = () => {
       isValid = false;
     }
 
-    if (filters.price && filters.price > 0 && wine.price > filters.price) {
+    if (
+      filters.price &&
+      Number(filters.price) > 0 &&
+      wine.price > Number(filters.price)
+    ) {
       isValid = false;
     }
 
-    if (filters.wineryId && wine.winery._id !== filters.wineryId) {
+    if (
+      filters.wineryId &&
+      wine?.winery?._id !== filters.wineryId
+    ) {
       isValid = false;
     }
 
@@ -60,10 +81,10 @@ const Home = () => {
     if (sort === "rating") {
       const avgA =
         a.reviews.reduce((sum, review) => sum + review.rating, 0) /
-          a.reviews.length || 0;
+          (a.reviews.length || 1);
       const avgB =
         b.reviews.reduce((sum, review) => sum + review.rating, 0) /
-          b.reviews.length || 0;
+          (b.reviews.length || 1);
       return avgB - avgA;
     }
     return 0;
@@ -71,7 +92,9 @@ const Home = () => {
 
   const groupedWines = wineries.map((winery) => ({
     winery,
-    wines: sortedWines.filter((wine) => wine.winery._id === winery._id),
+    wines: sortedWines.filter(
+      (wine) => wine?.winery?._id === winery._id
+    ),
   }));
 
   return (
@@ -92,6 +115,7 @@ const Home = () => {
             <option value="Sparkling">Sparkling</option>
           </select>
         </label>
+
         <label>
           Max Price:
           <input
@@ -102,6 +126,7 @@ const Home = () => {
             }
           />
         </label>
+
         <label>
           Winery:
           <select
@@ -118,6 +143,7 @@ const Home = () => {
             ))}
           </select>
         </label>
+
         <label>
           Sort by:
           <select onChange={(e) => setSort(e.target.value)} value={sort}>
@@ -146,12 +172,10 @@ const Home = () => {
                     <div className="wine-reviews-home">
                       {wine.reviews.length > 0 ? (
                         <p>
-                          <strong>Average review:</strong>{" "}
+                          <strong>Average review: </strong>
                           {(
-                            wine.reviews.reduce(
-                              (sum, review) => sum + review.rating,
-                              0
-                            ) / wine.reviews.length
+                            wine.reviews.reduce((sum, review) => sum + review.rating, 0) /
+                            wine.reviews.length
                           ).toFixed(2)}
                           /5
                         </p>
