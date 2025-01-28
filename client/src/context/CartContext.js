@@ -6,13 +6,13 @@ export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(() => {
-    const storedCart = sessionStorage.getItem("cartItems");
+    const storedCart = localStorage.getItem("cartItems");
     return storedCart ? JSON.parse(storedCart) : [];
   });
 
   useEffect(() => {
     if (cartItems.length > 0) {
-      sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }
   }, [cartItems]);
 
@@ -49,14 +49,14 @@ export const CartProvider = ({ children }) => {
             }
           : cartItem
       );
-      sessionStorage.setItem("cartItems", JSON.stringify(updatedItems));
+      localStorage.setItem("cartItems", JSON.stringify(updatedItems));
       return updatedItems;
     });
   };
 
   const clearCart = () => {
     setCartItems([]);
-    sessionStorage.removeItem("cartItems");
+    localStorage.removeItem("cartItems");
   };
 
   return (
