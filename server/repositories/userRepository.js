@@ -18,6 +18,10 @@ class UserRepository {
     return await User.findOne({ _id: id });
   }
 
+  static async getAllNames() {
+    return await User.find({}, "username -_id");
+  }
+
   static async addFavoriteWine(userId, wineId) {
     const user = await this.findById(userId);
 

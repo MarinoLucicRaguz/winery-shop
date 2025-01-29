@@ -92,6 +92,38 @@ class UserController {
       res.status(500).json({ message: "Error retrieving favorites." });
     }
   }
+
+  static async getAllNames(req, res){
+    try{
+      const response = await UserRepository.getAllNames();
+      res.status(200).json(response);
+    } catch(err){
+      console.error(err);
+      res.status(500).json({ message: "Error retrieving favorites." });
+    }
+  }
+
+  static async getUserById(req, res){
+    const {userId} = req.params;
+    try{
+      const user = await UserRepository.findById(userId);
+      res.status(200).json(user)
+    }catch(err){
+      console.error(err)
+      res.status(500).json({message: "error while retrieving user"})
+    }
+  }
+
+  static async getUserByName(req, res){
+    const {username} = req.params;
+    try{
+      const user = await UserRepository.findByUsername(username);
+      res.status(200).json(user)
+    }catch(err){
+      console.error(err)
+      res.status(500).json({message: "error while retrieving user"})
+    }
+  }
 }
 
 module.exports = UserController;

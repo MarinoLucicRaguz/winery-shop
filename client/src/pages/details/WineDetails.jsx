@@ -14,7 +14,7 @@ const WineDetails = () => {
   const [error, setError] = useState("");
   const [review, setReview] = useState({ rating: 5, comment: "" });
   const [userHasReviewed, setUserHasReviewed] = useState(false);
-  const [modalMessage, setModalMessage] = useState(""); // State for the modal message
+  const [modalMessage, setModalMessage] = useState("");
   const { addToCart } = useCart();
 
   useEffect(() => {

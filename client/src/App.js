@@ -19,6 +19,8 @@ import Orders from "./pages/Orders";
 import FavoritesPage from "./pages/FavoritesPage";
 import { getUserFromToken } from "./utils/auth";
 import AdminRoute from "./components/AdminRoute";
+import ListUsernames from "./pages/ListUsernamesPage";
+import UserDetails from "./pages/UserDetails";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -62,6 +64,8 @@ function App() {
               <Route element={<AdminRoute />}>
                 <Route path="/wines/add" element={<WineForm />} />
                 <Route path="/wineries/add" element={<WineryForm />} />
+                <Route path="/users" element={<ListUsernames />} />
+                <Route path="/users/:username" element={<UserDetails />} />
               </Route>
             </Route>
           </Routes>

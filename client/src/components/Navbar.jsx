@@ -29,6 +29,7 @@ const Navbar = ({ currentUser, setCurrentUser }) => {
           <Link to="/cart">Cart</Link>
           <Link to="/orders">My Orders</Link>
           <Link to="/favorites">My Favorites</Link>
+          <Link to="/users">Users</Link>
           <button onClick={handleLogoutClick} className="logout-button">
             Logout
           </button>
